@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--class="dark"-->
+<html lang="">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>Farm2</title>
+  <link rel="stylesheet" href="/css/loading.css" />
+</head>
+
+<body>
+  <div id="loading-mask">
+    <div class="loading-wrapper">
+      <span class="loading-dot loading-dot-spin"><i></i><i></i><i></i><i></i></span>
+    </div>
+  </div>
+  <!--skc主版本-->
+  <!-- /farm2/ -->
+  <!-- http://192.168.31.116:8080/farm2/ -->
+  <!-- http://127.0.0.1:8080/farm2/ -->
+  <!-- http://localhost:8080/farm2/ -->
+  <!--
+  data-config-demo-loginname="sysadmin"
+    data-config-demo-password="111111"
+  -->
+  <!--
+  data-config-auth-jwt-model="local"  default
+  data-config-auth-jwt-model="cookie"
+  -->
+  <!--
+  data-config-wide-model="false" default
+  data-config-wide-model="true"
+  -->
+  <!--
+  data-config-water-able="false" default
+  data-config-water-able="true"
+  -->
+  <div id="app" data-config-base-url="http://localhost:8080/farm2/" data-config-auth-jwt-model="local"
+    data-config-water-able="true" data-config-wide-model="false"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+<?xml version="1.0"  encoding="utf-8" standalone="yes" ?>
+<conf>
+    <!--vtype:boolean|string|number|text;   userable:true|false;-->
+    <group key="safe" name="安全">
+        <parameter name="系统默认密码" key="farm2.config.password.default" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>111111</val>
+            <describe>参数描述</describe>
+        </parameter>
+        <parameter name="图形验证码" key="farm2.config.imgcode.limit" version="0.0.1" vtype="number" userable="false">
+            <val>5</val>
+            <describe>当用户密码验证失败几次后出现验证码0为总是出现验证码，-1为不出现验证码，1为失败一次后出现验证码
+            </describe>
+        </parameter>
+        <parameter name="验证失败锁定登录名" key="farm2.config.login.lock" version="0.0.1" vtype="number"
+                   userable="false">
+            <val>10</val>
+            <describe>当用户密码验证失败几次后锁定账户</describe>
+        </parameter>
+    </group>
+    <group key="file" name="附件">
+        <parameter name="附件存放目录" key="farm2.config.file.dir" version="0.0.1" vtype="string" userable="false">
+            <val>DEFAULT:AUTO</val>
+            <describe>
+                设置附件存放目录，格式KEY:dirpath,格式KEY:dirpath,第一组为读写目录，其他组为只读目录（多组目录时必须保留DEFAULT目录）
+            </describe>
+        </parameter>
+        <parameter name="附件扩展目录" key="farm2.config.file.ex.dir" version="0.0.1" vtype="string" userable="false">
+            <val>DEFAULT:AUTO</val>
+            <describe>
+                设置附件扩展目录，存放预览文件缩略图等，格式KEY:dirpath,格式KEY:dirpath,第一组为读写目录，其他组为只读目录
+            </describe>
+        </parameter>
+        <parameter name="导出文件临时目录" key="farm2.config.file.export.dir" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>AUTO</val>
+            <describe>设置导出文件临时目录</describe>
+        </parameter>
+        <parameter name="允许上传的附件大小" key="farm2.config.file.length.max" version="0.0.1" vtype="number"
+                   userable="false">
+            <val>501048576</val>
+            <describe>单位b,1m=1048576</describe>
+        </parameter>
+        <parameter name="允许上传的图片大小" key="farm2.config.img.length.max" version="0.4.4" vtype="number"
+                   userable="false">
+            <val>10485760</val>
+            <describe>单位b,1m=1048576</describe>
+        </parameter>
+        <parameter name="允许上传的媒体大小" key="farm2.config.media.length.max" version="0.4.4" vtype="number"
+                   userable="false">
+            <val>524288000</val>
+            <describe>单位b,1m=1048576</describe>
+        </parameter>
+        <parameter name="允许上传的附件类型" key="farm2.config.file.exnames" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>png,jpg,jpeg,zip,doc,docx,xls,xlsx,pdf,ppt,pptx,web,rar,txt,flv,mp3,mp4,dcr,gif</val>
+            <describe>如：png,jpg,jpeg,zip,doc,docx,xls,xlsx,pdf,ppt,pptx,web,rar,txt,flv,mp3,mp4,dcr,gif</describe>
+        </parameter>
+        <parameter name="允许上传的图片类型" key="farm2.config.img.exnames" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>png,jpg,jpeg,gif</val>
+            <describe>如：png,jpg,jpeg,gif</describe>
+        </parameter>
+        <parameter name="允许上传的媒体类型" key="farm2.config.media.exnames" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>mp4,mp3</val>
+            <describe>如：mp4,mp3</describe>
+        </parameter>
+        <parameter name="浏览器图片缓存" key="farm2.config.img.browser.cache.able" version="0.0.1" vtype="boolean"
+                   userable="false">
+            <val>false</val>
+            <describe>是否开启浏览器缓存</describe>
+        </parameter>
+    </group>
+    <group key="soffice" name="Office预览">
+        <parameter name="linux环境soffice启动CMD命令" key="farm2.config.openoffice.start.linux.cmd" version="0.0.1"
+                   vtype="string" userable="false">
+            <val>nohup "$(readlink -f "$(which soffice)")" -headless -accept="socket,host=127.0.0.1,port=8100;urp;"
+                -nofirststartwizard &amp;
+            </val>
+            <describe>支持openoffice或libreoffice,也可写死路径启动，如：nohup /opt/libreoffice7.4/program/soffice
+                -headless -accept="socket,host=127.0.0.1,port=8100;urp;" -nofirststartwizard &amp;
+            </describe>
+        </parameter>
+        <parameter name="windows环境soffice启动CMD命令" key="farm2.config.openoffice.start.windows.cmd" version="0.0.1"
+                   vtype="string" userable="false">
+            <val>C:\Program Files\LibreOffice\program\soffice -headless -accept="socket,host=127.0.0.1,port=8100;urp;"
+                -nofirststartwizard
+            </val>
+            <describe>支持openoffice或libreoffice</describe>
+        </parameter>
+        <parameter name="linux环境soffice关闭CMD命令" key="farm2.config.openoffice.kill.linux.cmd" version="0.0.1"
+                   vtype="string" userable="false">
+            <val>ps -ef | grep soffice | grep -v grep | awk '{print $2}' | xargs kill -9</val>
+            <describe>支持openoffice或libreoffice</describe>
+        </parameter>
+        <parameter name="windows环境soffice关闭CMD命令" key="farm2.config.openoffice.kill.windows.cmd" version="0.0.1"
+                   vtype="string" userable="false">
+            <val>taskkill /F /T /IM soffice.exe</val>
+            <describe>支持openoffice或libreoffice</describe>
+        </parameter>
+        <parameter name="服务地址" key="farm2.config.openoffice.host" version="0.0.1" vtype="string" userable="false">
+            <val>127.0.0.1</val>
+            <describe>服务地址,支持openoffice或libreoffice</describe>
+        </parameter>
+        <parameter name="服務端口" key="farm2.config..openoffice.port" version="0.0.1" vtype="string" userable="false">
+            <val>8100</val>
+            <describe>服務端口,支持openoffice或libreoffice</describe>
+        </parameter>
+        <parameter name="命令行編碼" key="config.server.os.cmd.encode" version="0.0.1" vtype="string" userable="false">
+            <val>gb2312</val>
+            <describe>操作系統命令行支持的編碼</describe>
+        </parameter>
+    </group>
+    <group key="datasize" name="数据量">
+        <parameter name="事件日志保留多少天" key="farm2.config.data.log.event.size" version="0.2.2" vtype="number"
+                   userable="false">
+            <val>60</val>
+            <describe>事件日志保留多少天，单位天</describe>
+        </parameter>
+    </group>
+    <group key="lucene" name="全文检索">
+        <parameter name="索引文件存放目录" key="farm2.config.lucene.index.dir" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>AUTO</val>
+            <describe>设置索引文件存放目录</describe>
+        </parameter>
+    </group>
+    <group key="attendance" name="考勤">
+        <parameter name="上午上班时间" key="farm2.config.attendance.s.s.time" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>0800</val>
+            <describe>4位时间，前两位是小时，后两位是分钟,填写0表示无需打卡</describe>
+        </parameter>
+        <parameter name="上午下班时间" key="farm2.config.attendance.s.x.time" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>1200</val>
+            <describe>4位时间，前两位是小时，后两位是分钟,填写0表示无需打卡</describe>
+        </parameter>
+        <parameter name="下午上班时间" key="farm2.config.attendance.x.s.time" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>1400</val>
+            <describe>4位时间，前两位是小时，后两位是分钟,填写0表示无需打卡</describe>
+        </parameter>
+        <parameter name="下午下班时间" key="farm2.config.attendance.x.x.time" version="0.0.1" vtype="string"
+                   userable="false">
+            <val>1800</val>
+            <describe>4位时间，前两位是小时，后两位是分钟,填写0表示无需打卡</describe>
+        </parameter>
+    </group>
+    <group key="titles" name="系统标识符">
+        <parameter name="系统标题" key="farm2.config.sys.title.head" version="0.0.1" vtype="string" userable="false">
+            <val>WHRS人力资源</val>
+            <describe>如：WHRS人力资源</describe>
+        </parameter>
+        <parameter name="系统页脚" key="farm2.config.sys.title.foot" version="0.0.1" vtype="string" userable="false">
+            <val>人力资源管理系统</val>
+            <describe>如：人力资源管理系统-备案号等</describe>
+        </parameter>
+        <parameter name="帮助页面地址" key="farm2.config.sys.help.url" version="0.0.1" vtype="string" userable="false">
+            <val>http://www.wcpdoc.com/webspecial/home/Pub2c9ff22692f269bd0195219f89ac69aa.html</val>
+            <describe>系统帮助页面地址URL,为NONE时不展示</describe>
+        </parameter>
+        <parameter name="登录页公告内容" key="farm2.config.sys.tip.login.html" version="0.2.8" vtype="text"
+                   userable="false">
+            <val>NONE</val>
+            <describe>在登录页面展示的公告内容,为NONE时不展示,支持html不可超过2000个字符</describe>
+        </parameter>
+        <parameter name="系统首页地址URL" key="farm2.config.sys.home.url" version="0.4.4" vtype="text"
+                   userable="false">
+            <val>/system</val>
+            <describe>默认的首页地址，如/info或/home</describe>
+        </parameter>
+    </group>
+    <group key="permissions" name="权限设置">
+        <parameter name="是否必须登录后访问" key="farm2.config.permission.login.need" version="0.1.9" vtype="boolean"
+                   userable="false">
+            <val>false</val>
+            <describe>为true时允许用户不登录进行前台操作，为false时默认进入登录页面</describe>
+        </parameter>
+        <parameter name="默认菜单权限" key="farm2.config.permission.default.menus" version="0.1.9" vtype="string"
+                   userable="false">
+            <val>NONE</val>
+            <describe>
+                用户登录后默认添加的前台菜单权限，添加菜单关键字多个用逗号分隔,无默认菜单时添加NONE,常用：CREAT_KNOW
+            </describe>
+        </parameter>
+    </group>
+    <group key="wdap" name="wdap系统">
+        <parameter name="附件转换任务默认转换超时时间" key="farm2.config.wdap.task.timeout.default" version="0.2.2"
+                   vtype="number" userable="false">
+            <val>60</val>
+            <describe>默认超时时间，wdap附件转换任务中，当一个转换器执行时间超过该值时，抛出异常结束转换，单位（秒）
+            </describe>
+        </parameter>
+    </group>
+</conf>

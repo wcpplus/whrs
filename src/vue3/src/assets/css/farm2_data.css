@@ -1,0 +1,66 @@
+/**数据列表和分页控件样式*/
+.farm2-data-table {
+  height: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+  .table>:not(caption)>*>* {
+    padding:.0rem .0rem;
+  }
+}
+.farm2-data-table .el-table--fit {
+  height: 100%;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  border-radius: 1em;
+}
+.farm2-data-page {
+  padding: 10px;
+  padding-left: 20px;
+}
+.farm2-data-table .el-select__wrapper {
+  font-size: 12px;
+}
+.farm2-data-buttons-operators {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.farm2-data-buttons-operators > .el-button,
+.el-input-group {
+  margin-bottom: 20px;
+}
+.farm2-data-querys-operators {
+  text-align: right;
+  padding-right: 20px;
+  float: right;
+}
+.farm2-data-querys-operators > .el-button,
+.el-input-group {
+  margin-bottom: 20px;
+}
+
+.farm2-data-querys-operators .input-with-select {
+  max-width: 200px;
+  margin-right: 10px;
+}
+
+.farm2-data-querys-operators .input-with-select .el-button:hover {
+  color: var(--el-menu-active-color);
+}
+
+.farm2-data-querys-operators .input-with-select .el-button:active {
+  color: var(--el-menu-text-color);
+  border-color: var(--el-menu-text-color);
+}
+.farm2-tree {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 1em;
+}
+
+.farm2-data-table .el-table td.el-table__cell div {
+  white-space: nowrap;
+}
+
+#farm2-frame-container .el-dialog {
+  background-color: #f2f7ff;
+}

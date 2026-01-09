@@ -1,0 +1,269 @@
+<template>
+  <el-container>
+    <el-header>
+      <!--导航条 -->
+      <Data_navigate></Data_navigate>
+    </el-header>
+    <el-main>
+      <el-container>
+        <el-aside width="200px" style="padding-left: 10px;">
+          <el-segmented v-model="value" v-loading="loadingGroups" id="key" aria-label="name" @change="chooseGroupEvent"
+            style="background-color: #fff;padding: 20px; width: 100%;margin-top: 50px;border-radius: 1em;"
+            :options="options" direction="vertical" size="small">
+            <template #default="scope">
+              <div style="border-radius: 1em;">
+                <div>{{ scope.item.label }}</div>
+              </div>
+            </template>
+          </el-segmented>
+        </el-aside>
+        <el-container>
+          <el-header>
+            <!--普通查询条件  isShowQueryPlus是否展示高级查询-->
+            <Data_querys placeholder="名称" :isShowQueryPlus="true">
+            </Data_querys>
+            <div class="farm2-data-buttons-operators">
+              <!--
+              <el-button type="primary" @click="openDataFormClick" plain><el-icon>
+                  <Plus />
+                </el-icon>创建</el-button>-->
+              <el-button type="danger" @click="datasDeleteClick" plain><el-icon>
+                  <Delete />
+                </el-icon>删除</el-button>
+            </div>
+          </el-header>
+          <el-main>
+            <!--数据集-->
+            <div class="farm2-data-table">
+              <el-table v-loading="loadingFlag" :data="dataResult.data" :stripe="true"
+                @selection-change="handleSelectionChange" :highlight-current-row="true" class="table"
+                @sort-change="(data: SortInfo) => { doDataQuery(tableUtils.getSortQuery(data)) }">
+                <el-table-column fixed="left" type="selection" width="55" />
+                <el-table-column fixed="left" sortable="custom" prop="NAME" label="参数名称" min-width="150" />
+                <el-table-column sortable="custom" prop="PKEY" label="参数关键字" min-width="250" />
+                <el-table-column sortable="custom" prop="PVALUE" label="参数值" min-width="250" />
+                <el-table-column prop="DESCRIBES" label="描述" min-width="550" />
+                <el-table-column sortable="custom" prop="USERABLE" :formatter="dic.formatUSERABLE" label="个性化"
+                  min-width="100" />
+                <el-table-column sortable="custom" prop="SOURCETYPE" :formatter="dic.formatSOURCE" label="来源"
+                  min-width="100" />
+                <el-table-column fixed="right" label="操作" min-width="100">
+                  <template #default="scope">
+                    <!-- <el-button link type="primary" icon="View" size="small" @click="dataViewClick(scope.row)">
+                      查看
+                    </el-button>
+
+                    <el-button link type="primary" icon="Edit" size="small" @click="dataEditClick(scope.row)">
+                      修改
+                    </el-button>-->
+                    <el-button link type="success" icon="Edit" size="small" @click="dataEditValClick(scope.row)">
+                      设置
+                    </el-button>
+                    <!-- <el-button link type="danger" icon="Delete" size="small"
+                      @click="dataDeleteClick(scope.row)">删除</el-button> -->
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-main>
+          <el-footer>
+            <!--分页框-->
+            <Data_page :remoteData="dataResult" />
+          </el-footer>
+        </el-container>
+      </el-container>
+    </el-main>
+  </el-container>
+  <!--高级查询表单-->
+  <Parameter_form_query></Parameter_form_query>
+  <!--数据实体表单-->
+  <Parameter_form_data></Parameter_form_data>
+  <!--数据实体表单-->
+  <Parameter_form_val></Parameter_form_val>
+</template>
+<script setup lang="ts">
+import Data_navigate from '@/components/datas/data_navigate.vue';
+import dic from './utils/dictinarys'
+import Data_page from '@/components/datas/data_page.vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, provide, reactive, ref } from 'vue';
+import farm2Request from '@/service/remoteRequests/Farm2Request';
+import Data_querys from '@/components/datas/data_querys.vue';
+import notice from '@/components/msg/FarmNotice';
+import QueryUtils from '@/hook/farmQueryUtils'
+import mitt from 'mitt';
+import { PageEvent } from '@/types/commons/PageEvent';
+import type { SortInfo } from '@/types/elementplus/SortInfo';
+import type { DataQuery } from '@/types/commons/DataQuery';
+import type { DataResult } from '@/types/commons/DataResult';
+import tableUtils from '@/hook/farmTableUtils';
+import Parameter_form_query from './components/parameter_form_query.vue';
+import Parameter_form_data from './components/parameter_form_data.vue';
+import Parameter_form_val from './components/parameter_form_val.vue';
+import { getUpdateType, type FormParam } from '@/types/commons/FormType';
+import { MittKesEnum } from './utils/mittKeys'
+import { RequestTypeEnum } from '@/types/commons/RequestTypeEnum';
+import type { DataResponse } from '@/types/commons/DataResponse';
+import { ElMessageBox } from 'element-plus';
+import Farm2Request from '@/service/remoteRequests/Farm2Request';
+//import { formatter } from 'element-plus';
+
+// import Farm2Request from '@/service/remoteRequests/Farm2Request';
+// import { RequestTypeEnum } from '@/types/commons/RequestTypeEnum';
+// import { ElMessageBox } from 'element-plus';
+//---------------------------------------------------------
+//路由信息：
+//import parameter_page from "@/views/apps/parameter/parameter_page.vue";
+// {
+//     path: "parameter",
+//     name: "parameter_page",
+//     component: parameter_page,
+//     meta: { title: "系统参数" },
+//   },
+//---------------------------------------------------------
+const eventBus = mitt();//事件总线
+const dataResult: DataResult = reactive(QueryUtils.getDefaultResult());//数据查询结果
+const dataQuery: DataQuery = reactive({});//查询条件
+const loadingFlag = ref(true);//加载中遮罩
+const multipleSelection = ref([]);//当前选定行
+const handleSelectionChange = (selection: []) => {
+  multipleSelection.value = selection;//选定行事件
+};
+//---------------------------------------------------------
+const value = ref('all')
+const loadingGroups = ref(true);
+const options = reactive<[{ value?: string, label?: string }]>([{}]);
+
+const chooseGroupEvent = (groupkey: string) => {
+  if (groupkey == 'all') {
+    doDataQuery({ rules: [] });
+  } else {
+    doDataQuery({ rules: [{ key: 'GKEY', value: groupkey, compara: '=' }] });
+  }
+}
+
+const doQueryGroups = async () => {
+  farm2Request.submit("api/parameter/groups", RequestTypeEnum.post, loadingGroups, {}).then((remoteResult: DataResponse) => {
+    Object.assign(options, (remoteResult.data as [{ name: string, key: string }]).map(((item) => ({
+      label: item.name,
+      value: item.key
+    }))));
+    options.unshift({ value: 'all', label: '全部' });
+  })
+    .catch((msg: Error) => {
+      notice.byError(msg.message);
+    });
+}
+doQueryGroups();
+
+//---------------------------------------------------------
+
+/**
+ * 后台检索查询--HTTP(POST)
+ * @param query
+ */
+const doDataQuery = async (query?: DataQuery) => {
+  farm2Request.search('api/parameter/query', Object.assign(dataQuery, query), loadingFlag)
+    .then((remoteResult: DataResult) => {
+      Object.assign(dataResult, remoteResult);
+    })
+    .catch((msg: Error) => {
+      notice.byError(msg.message);
+    });
+}
+
+/**
+ * 后台批量删除--HTTP(DELETE)
+ * @param ids
+ */
+const doDataDelete = (ids: string[]) => {
+  Farm2Request.submit(
+    'api/parameter/batch',
+    RequestTypeEnum.delete,
+    loadingFlag, ids
+  ).then(() => {
+    doDataQuery();
+  }).catch((msg: Error) => {
+    notice.byError(msg.message);
+  });
+}
+
+
+/**
+ * 打开数据更新窗口-事件
+ * @param row 选定行数据
+ */
+// const dataEditClick = (row: { ID: string }) => {
+//   eventBus.emit(PageEvent.data_form_open, { isOpen: true, type: <FormParam>{ type: getUpdateType(), id: row.ID, data: row } });
+// }
+
+
+/**
+ * 打开数据赋值窗口-事件
+ * @param row 选定行数据
+ */
+const dataEditValClick = (row: { ID: string }) => {
+  eventBus.emit(MittKesEnum.openSetValueForm, { isOpen: true, type: <FormParam>{ type: getUpdateType(), id: row.ID, data: row } });
+}
+
+
+
+
+/**
+ * 删除一条-事件
+ * @param row 选定行数据
+ */
+// const dataDeleteClick = (row: { ID: string }) => {
+//   ElMessageBox.confirm('确认删除?', { icon: 'QuestionFilled' })
+//     .then(() => {
+//       doDataDelete([row.ID]);
+//     }).catch(() => { });
+// }
+
+/**
+ * 删除多条-事件
+ * @param row
+ */
+const datasDeleteClick = () => {
+  const selection: { ID: string; }[] = multipleSelection.value;
+  const ids = selection.map(item => item.ID);
+  ElMessageBox.confirm('当前选定' + ids.length + '条数据,确认删除?', { icon: 'QuestionFilled' })
+    .then(() => {
+      doDataDelete(ids);
+    }).catch(() => { });
+}
+
+
+
+/**
+ * 打开数据查看窗口-事件
+ * @param row 选定行数据
+ */
+// const dataViewClick = (row: { ID: string }) => {
+//   eventBus.emit(PageEvent.data_form_open, { isOpen: true, type: <FormParam>{ type: getViewType(), id: row.ID, data: row } });
+// }
+
+
+/**
+ * 打开数据创建窗口-事件
+ */
+// const openDataFormClick = () => {
+//   eventBus.emit(PageEvent.data_form_open, { isOpen: true, type: <FormParam>{ type: getCreatType() } });
+// }
+
+//---------------------------------------------------------
+//---------------------------------------------------------
+onMounted(() => {
+  //页面加载后调用默认查询事件
+  doDataQuery();
+  //事件注册
+  eventBus.on(PageEvent.data_do_query, (query) => {
+    doDataQuery(query as DataQuery);//数据查询方法
+  })
+});
+onBeforeMount(() => {
+  provide('eventBus', eventBus);//子组件注入事件总线
+});
+onBeforeUnmount(() => {
+  eventBus.all.clear();//移除事件总线
+})
+</script>

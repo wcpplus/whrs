@@ -1,0 +1,107 @@
+#farm2-frame-container {
+  background-color: #f2f7ff;
+}
+.dark #farm2-frame-container{
+  background-color: #000000;
+}
+#farm2-frame-left .el-menu {
+  margin: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-right: 0px solid var(--el-menu-border-color);
+}
+#farm2-frame-left .el-sub-menu__title {
+  border-radius: 0.5em;
+  font-weight: 600;
+  height: 46px;
+}
+
+#farm2-frame-left .el-sub-menu {
+  margin-top: 8px;
+}
+#farm2-frame-left .el-menu-item {
+  border-radius: 1em;
+  font-weight: 200;
+  transition: margin-left 0.6s ease;
+}
+#farm2-frame-left .el-menu-item:hover {
+  background-color: transparent;
+  margin-left: 0.5em;
+}
+#farm2-frame-left .el-menu-item.is-active {
+  font-weight: 700;
+}
+
+#farm2-frame-left .el-sub-menu.is-active > .el-sub-menu__title {
+  background-color: var(--el-color-primary);
+  color: var(--el-color-white);
+}
+#farm2-frame-left .el-menu {
+  margin: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-right: 0px solid var(--el-menu-border-color);
+}
+
+#farm2-frame-left .farm2_user_info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 10px auto;
+  /* 上下 20px, 左右自动 */
+  width: fit-content;
+  /* 确保元素宽度由内容决定 */
+  padding-bottom: 20px;
+  border-bottom: 1px double #ddd;
+}
+
+#farm2-frame-left .logo {
+  max-width: 128px;
+  height: 28px;
+  padding: 4px;
+  border-radius: 8px 22px 8px 8px;
+}
+
+#farm2-frame-left .el-sub-menu__title {
+  border-radius: 0.5em;
+  font-weight: 600;
+  height: 46px;
+}
+#farm2-frame-left .el-menu {
+  margin: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-right: 0px solid var(--el-menu-border-color);
+}
+#farm2-frame-left .el-sub-menu__title {
+  border-radius: 0.5em;
+  font-weight: 600;
+  height: 46px;
+}
+#farm2-frame-left .farm2_sys_title {
+  color: var(--el-color-primary);
+  font-weight: 700;
+  font-size: 1.4em;
+}
+#farm2-frame-left .farm2_header_container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 20px;
+  margin-left: 30px;
+}
+#farm2-frame-left .farm2_user_info .skcPhoto {
+  width: 28px;
+  border-radius: 32px;
+}
+
+#farm2-frame-left .farm2_user_info .username {
+  font-size: 1em;
+  margin-top: -2px;
+  color: #7c8db5;
+}
+
+#farm2-frame-left .farm2_user_info .flags {
+  font-size: 14px;
+  margin-top: -4px;
+}

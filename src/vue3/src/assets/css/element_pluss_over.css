@@ -1,0 +1,6 @@
+.el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px #cccccc inset;
+}
+.el-textarea__inner.is-focus {
+  box-shadow: 0 0 0 1px #cccccc inset;
+}

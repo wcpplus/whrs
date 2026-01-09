@@ -1,0 +1,59 @@
+/* 样式可以根据需要添加 */
+.wts-report-part-box {
+  background-color: #ffffff;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  color: #666666;
+  font-family: "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", sans-serif;
+  padding-bottom: 50px;
+  .el-tag {
+    margin-left: 8px;
+  }
+  .wts-report-score1 {
+    color: coral;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 700;
+  }
+  .wts-report-score2 {
+    color: coral;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+  }
+  .wts-report-score3 {
+    color: coral;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 700;
+  }
+  .wts-report-title-h1 {
+    text-align: center;
+    font-size: 24px;
+    margin: 30px 0px;
+  }
+
+  .wts-report-part-content {
+    margin-top: 20px;
+
+    .el-icon {
+      top: 2px;
+    }
+
+    .wts-report-part-h2 {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--bs-gray-600);
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.wts-report-part-box.skc-mobile{
+  padding: 8px;
+  margin: 8px;
+  .wts-report-part-h2{
+    padding: 20px 20px ;
+  }
+}

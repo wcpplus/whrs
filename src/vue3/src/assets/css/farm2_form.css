@@ -1,0 +1,57 @@
+/**数据表单样式*/
+.farm2-data-form {
+  background-color: var(--el-skc-theme-body-back-c);
+}
+
+.farm2-data-form .el-drawer__body {
+  padding: 0px;
+}
+
+.farm2-data-form .title {
+  display: flex;
+  align-items: center;
+  /* 垂直居中 */
+
+  height: 60px;
+  padding: 10px;
+  padding-left: 20px;
+  background-color: var(--el-color-primary);
+  color: #ffffff;
+}
+
+.farm2-data-form .el-form {
+  margin: 20px;
+}
+
+.farm2-form-button {
+  width: 100%;
+}
+
+.farm2-form-button .farm2-right {
+  text-align: right;
+}
+
+.farm2-form-button .el-switch {
+  margin-left: 10px;
+}
+
+/**查询表单样式*/
+.farm2-query-form .el-drawer__body {
+  padding: 0px;
+}
+
+.farm2-query-form .title {
+  padding: 20px;
+  background-color: var(--el-skc-theme-h-color);
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.farm2-query-form form {
+  margin: 20px;
+}
+
+/**在树的复选框禁用的时候，隐藏它*/
+.farm-tree-choose .el-checkbox.is-disabled {
+  display: none;
+}

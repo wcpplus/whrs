@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msgs>
+    <group alt="普通异常消息">
+        <entry key="Full authentication is required to access this resource">访问当前资源，需要身份验证</entry>
+        <entry key="Access Denied">请求没有足够的权限</entry>
+        <entry key="not login">用户未登录</entry>
+        <entry key="Full authentication is required to access this resource">无访问权限</entry>
+        <entry key="JSON parse error: Cannot construct instance of `org.farm2.tools.db.commons.DBRule`, problem: _dir=%~dp0违反SQL注入风险约束！">查询条件不安全</entry>
+    </group>
+    <group alt="后端验证框架，模板异常消息：ValidationMessages.properties,在异常处理环境进行翻译（GlobalExceptionHandler.handleValidException）">
+        <entry key="farm2.validate.template.size" expression="farm2.validate.template.size:{min},{max}">
+            长度必须在?到?个字符之间
+        </entry>
+        <entry key="farm2.validate.template.notnull" expression="farm2.validate.template.notnull">不能为空</entry>
+    </group>
+</msgs>
